@@ -1,0 +1,6 @@
+{
+  "name": "MangaPulse - Manga Reader & Auto-Sync Engine",
+  "description": "სწრაფი, თანამედროვე მანგის საკითხავი პლატფორმა Webtoon/Single-page რეჟიმით, ავტომატური თავების განახლების სკრიპტებით და არქიტექტურით.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
