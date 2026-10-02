@@ -33,7 +33,7 @@ async function runMangaSync() {
 
   try {
     // 1. Fetch tracked mangas with a MangaDex ID
-    const { data: mangas, error: fetchErr } = await supabase
+    let { data: mangas, error: fetchErr } = await supabase
       .from('mangas')
       .select('id, title, mangadex_id, latest_chapter')
       .not('mangadex_id', 'is', null);
@@ -43,8 +43,17 @@ async function runMangaSync() {
     }
 
     if (!mangas || mangas.length === 0) {
-      console.log('ℹ️ No tracked mangas found in database. Add mangas with a valid "mangadex_id" to begin.');
-      return;
+      console.log('ℹ️ No tracked mangas found in database. Auto-seeding top popular titles...');
+      const seedList = [
+        { title: 'Solo Leveling', alt_title: 'სოლო ლეველინგი', author: 'Chugong', mangadex_id: '32d76d19-8a05-4db0-9fc2-e0b0648fe9d0', status: 'Completed', genres: ['Action', 'Fantasy'] },
+        { title: 'One Piece', alt_title: 'ვან პისი', author: 'Eiichiro Oda', mangadex_id: 'a1c7c817-4e59-43b7-9365-09675a149a6f', status: 'Ongoing', genres: ['Adventure', 'Action', 'Shonen'] },
+        { title: 'Jujutsu Kaisen', alt_title: 'ჯუჯუცუ კაისენი', author: 'Gege Akutami', mangadex_id: 'c52b2ce3-7f95-469c-96b1-6d8452151ce2', status: 'Completed', genres: ['Action', 'Supernatural'] },
+        { title: 'Chainsaw Man', alt_title: 'ბენზოხერხა ადამიანი', author: 'Tatsuki Fujimoto', mangadex_id: 'a77742b1-edd9-4bb8-a562-6dd4e7272802', status: 'Ongoing', genres: ['Action', 'Dark Fantasy'] },
+        { title: 'Berserk', alt_title: 'ბერსერკი', author: 'Kentaro Miura', mangadex_id: '801513ba-a712-4985-8cdd-c697748107ac', status: 'Ongoing', genres: ['Dark Fantasy', 'Seinen'] },
+      ];
+      await supabase.from('mangas').upsert(seedList, { onConflict: 'mangadex_id' });
+      const { data: refreshed } = await supabase.from('mangas').select('id, title, mangadex_id, latest_chapter').not('mangadex_id', 'is', null);
+      mangas = refreshed || [];
     }
 
     console.log(`📋 Found ${mangas.length} mangas to inspect.\n`);

@@ -15,6 +15,7 @@ import {
   HelpCircle,
   X,
 } from 'lucide-react';
+import { AdBanner } from './AdBanner';
 
 interface MangaReaderProps {
   manga: Manga;
@@ -438,6 +439,11 @@ export const MangaReader: React.FC<MangaReaderProps> = ({
                   </button>
                 )}
               </div>
+            </div>
+
+            {/* Adsterra 728x90 Banner */}
+            <div className="w-full max-w-3xl pb-6">
+              <AdBanner />
             </div>
           </div>
         ) : (

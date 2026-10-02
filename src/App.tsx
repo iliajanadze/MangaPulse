@@ -14,6 +14,7 @@ import { AutomationDashboard } from './components/AutomationDashboard';
 import { ArchitectureGuide } from './components/ArchitectureGuide';
 import { LibraryView } from './components/LibraryView';
 import { searchMangaDex, MangaDexSearchResult } from './services/mangadexService';
+import { AdBanner } from './components/AdBanner';
 import {
   Flame,
   Filter,
@@ -353,6 +354,9 @@ export default function App() {
               </div>
             )}
 
+            {/* Adsterra 728x90 Top Banner */}
+            <AdBanner />
+
             {/* Filter and Controls Bar */}
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-2 border-b border-neutral-800/80">
               {/* Genre Segmented Buttons */}
@@ -513,6 +517,9 @@ export default function App() {
                 )}
               </div>
             )}
+
+            {/* Adsterra 728x90 Bottom Banner */}
+            <AdBanner className="mt-8" />
           </div>
         )}
 

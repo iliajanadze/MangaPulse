@@ -2,9 +2,11 @@ name: Daily Manga Auto-Sync
 
 on:
   schedule:
-    # Runs automatically every 6 hours (at 00:00, 06:00, 12:00, and 18:00 UTC)
+    # ეშვება ავტომატურად ყოველ 6 საათში (00:00, 06:00, 12:00, 18:00 UTC)
     - cron: '0 */6 * * *'
-  workflow_dispatch: # Allows manual trigger from GitHub UI anytime
+  push:
+    branches: [ main ] # პუშის გაკეთებისთანავე მომენტალურად იწყებს სინქრონიზაციას
+  workflow_dispatch: # გაძლევთ საშუალებას ნებისმიერ დროს ხელით გაუშვათ GitHub Actions-იდან
 
 jobs:
   sync-manga-releases:
