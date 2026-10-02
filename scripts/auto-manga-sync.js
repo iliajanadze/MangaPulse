@@ -75,16 +75,11 @@ async function runMangaSync() {
       console.log(`🔍 Checking updates for: "${manga.title}" (ID: ${manga.mangadex_id})`);
 
       try {
-        // 2. Query MangaDex API with English ('en') and Russian ('ru') filters
-        const feedUrl = `https://api.mangadex.org/manga/${encodeURIComponent(manga.mangadex_id)}/feed`;
+        const mangaId = manga.mangadex_id;
+        // 2. Query MangaDex API with requested URL structure (EN/RU languages, all content ratings)
+        const url = `https://api.mangadex.org/manga/${mangaId}/feed?translatedLanguage[]=en&translatedLanguage[]=ru&contentRating[]=safe&contentRating[]=suggestive&contentRating[]=erotica&contentRating[]=pornographic&order[chapter]=desc&limit=10`;
         
-        const feedResponse = await axios.get(feedUrl, {
-          params: {
-            'translatedLanguage[]': ['en', 'ru'],
-            'order[chapter]': 'desc',
-            limit: 10,
-            'contentRating[]': ['safe', 'suggestive'],
-          },
+        const feedResponse = await axios.get(url, {
           headers: {
             'User-Agent': 'MangaPulse-AutoBot/1.0 (https://github.com/iliajanadze/MangaPulse)',
             'Accept': 'application/json',
